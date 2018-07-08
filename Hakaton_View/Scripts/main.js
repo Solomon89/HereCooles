@@ -314,3 +314,5 @@ Number.prototype.toMMSS = function () {
 
 // Now use the map as required...
 calculateRouteFromAtoB(platform);
+
+

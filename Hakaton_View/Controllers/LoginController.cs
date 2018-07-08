@@ -39,7 +39,7 @@ namespace Hakaton_View.Controllers
                 ViewBag.Message =
                     $"Добро пожаловать, {SessionAccount.GetFio()}!";
 
-                return Redirect(Request.UrlReferrer?.AbsolutePath ?? HomeIndex);
+                return Redirect( HomeIndex);
             }
             else
             {

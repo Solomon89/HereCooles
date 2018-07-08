@@ -6,50 +6,112 @@
     <title>HereCules</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/main.css" rel="stylesheet" type="text/css" />
+
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <link rel="stylesheet" type="text/css" href="https://js.cit.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1526040296" />
     <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-core.js"></script>
     <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-service.js"></script>
     <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-ui.js"></script>
     <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/demo.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/icons.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/component.css" />
     <link href="~/Content/map.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr.custom.js"></script>
+    <link href="~/Content/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed navbar-left" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="navbar-brand brand">@ViewBag.Title</div>
+    <div id="st-container" class="st-container">
+        <nav class="st-menu st-effect-1" id="menu-1" style="z-index:10000; background-color:white">
+
+            @if (Hakaton_View.Controllers.Manage.SessionAccount.GetId() == 0)
+            {
+                <div class="container" style="background-size: 300px auto; height:173pt">
+
+                </div>
+            }
+            else
+            {
+                <div class="container" style="background-image:url(../../images/Профиль.JPG); background-size: 300px auto; height:173pt">
+
+                </div>
+            }
+            
+            <div class="container">
+                <div class="col-sm-10 menuItems">
+                    <ul>
+
+
+                        <li>
+                            @Html.ActionLink("Карта", "Index", "Map")
+                        </li>
+
+                        <li>
+                            @Html.ActionLink("Задания", "Index", "Map")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Баллы", "Index", "Map")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Профиль", "Index", "Map")
+                        </li>
+                        <li>
+                            @Html.ActionLink("О нас", "Index", "Map")
+                        </li>
+
+
+                    </ul>
+                    @if (Hakaton_View.Controllers.Manage.SessionAccount.GetId() == 0)
+    {
+                <div style="margin-top:50pt">
+                    @Html.ActionLink("Войти", "Login", "Login")
+                </div>
+}
+else
+{
+                <div style="margin-top:50pt">
+                    @Html.ActionLink("Выйти из аккаунта", "Logout", "Login")
+                </div>
+}
+
+                </div>
             </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav"></ul>
-
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-    @if (ViewBag.Map == true)
-    {
-        @RenderBody()
-    }
-    else
-    {
-        <div class="container body-content">
-            @RenderBody()
+        </nav>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid st-trigger-effects">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header" id="st-trigger-effects" onclick="document.querySelector( '#st-trigger-effects > button' ).click()">
+                    <button type="button" data-effect="st-effect-1"  class="navbar-toggle  navbar-left" style="z-index:80000001">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="navbar-brand brand">@ViewBag.Title</div>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav"></ul>
+                    
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+      
+            @if (ViewBag.Map == true)
+            {
+                @RenderBody()
+            }
+            else
+            {
+                <div class="container body-content">
+                       @RenderBody()
+                </div>
+            }
         </div>
-    }
-
-
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/main.js" type="text/javascript" charset="utf-8"></script>
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script src="~/Scripts/classie.js"></script>
+        <script src="~/Scripts/sidebarEffects.js"></script>
+        <script src="~/Scripts/main.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
