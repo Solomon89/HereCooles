@@ -11,6 +11,8 @@ namespace Hakaton_View.Controllers
         private readonly DataManager _dataManager;
         private const string HomeIndex = "/Map/Index";
         private const string LoginPage = "/Login/Login";
+        private const string DistributionPage = "/Login/Distribution";
+
         public LoginController()
         {
             _dataManager = new DataManager();
@@ -39,7 +41,7 @@ namespace Hakaton_View.Controllers
                 ViewBag.Message =
                     $"Добро пожаловать, {SessionAccount.GetFio()}!";
 
-                return Redirect( HomeIndex);
+                return Redirect(DistributionPage);
             }
             else
             {
@@ -77,25 +79,27 @@ namespace Hakaton_View.Controllers
             TempData["sAlertMessage"] = $"Добро пожаловать, {SessionAccount.GetFio()}!";
             return Redirect("/Account/ProfilePerson");
         }
+
         [HttpGet]
         public ActionResult Distribution()
         {
             if (SessionAccount.GetId() == null) return Redirect(LoginPage);
             var user = SessionAccount.GetCurretAccount();
-           
+
             if (user == null)
             {
                 user = new User();
             }
-           
+
             return View(user);
         }
+
         [HttpPost]
-        public ActionResult Distribution(int  range1 , int range2,int range3, int range4, int range5)
+        public ActionResult Distribution(int range1, int range2, int range3, int range4, int range5)
         {
             if (SessionAccount.GetId() == null) return Redirect(LoginPage);
             var user = SessionAccount.GetCurretAccount();
-            if (user == null)
+            if (user == null || user.Id == 0)
             {
                 user = new User();
             }
@@ -109,7 +113,8 @@ namespace Hakaton_View.Controllers
                 dictionary.Add("Алкаш", range5);
                 _dataManager.UserManager.SetPerformancesUser(user.Id, dictionary);
             }
-            return View(user);
+
+            return Redirect(HomeIndex);
         }
     }
 }

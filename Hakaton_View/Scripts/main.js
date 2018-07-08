@@ -1,4 +1,5 @@
 // Получаем значение текущего положения человека (начало) 
+var dataPoints;
 goToMyDestination();
 function goToMyDestination() {
     var latitude = 0;
@@ -20,7 +21,9 @@ function showPosition(position) {
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
     }
-   
+
+    executeFunction('/Map/GetWay', { x: latitude, y: longitude }, 'POST');
+
     if (parisMarker != null) {
         map.removeObject(parisMarker);
     }
@@ -45,6 +48,28 @@ function calculateRouteFromAtoB(platform) {
             waypoint2: '45.049131,41.984018'
         };
 
+
+    router.calculateRoute(
+        routeRequestParams,
+        onSuccess,
+        onError
+    );
+}
+
+function calculateRouteFromAtoBFromController(platform, data) {
+    var router = platform.getRoutingService(),
+        routeRequestParams = {
+            mode: 'shortest;pedestrian',
+            representation: 'display',
+            routeattributes: 'waypoints,summary,shape,legs',
+            maneuverattributes: 'direction,action'
+        };
+    var i = 0;
+    dataPoints = data;
+    data.forEach(function (item) {
+        routeRequestParams["waypoint" + i] = item.X.toString() + "," + item.Y.toString();
+        i = i + 1;
+    });
 
     router.calculateRoute(
         routeRequestParams,
@@ -183,15 +208,39 @@ function addRouteShapeToMap(route) {
  * @param {Object} route  A route as received from the H.service.RoutingService
  */
 function addManueversToMap(route) {
-    var svgMarkup = '<svg width="18" height="18" ' +
-        'xmlns="http://www.w3.org/2000/svg">' +
-        '<circle cx="8" cy="8" r="8" ' +
-        'fill="orange" stroke="white" stroke-width="1"  />' +
-        '</svg>',
-        dotIcon = new H.map.Icon(svgMarkup, { anchor: { x: 8, y: 8 } }),
+    var svgMarkup1 = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+            'fill="#C840E9" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+        dotIcon1 = new H.map.Icon(svgMarkup1, { anchor: { x: 15, y: 15 } }),
         group = new H.map.Group(),
         i,
         j;
+    var svgMarkup2 = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+            'fill="#FF4F9A" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+        dotIcon2 = new H.map.Icon(svgMarkup2, { anchor: { x: 15, y: 15 } });
+    var svgMarkup3 = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+            'fill="#FF9057" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+        dotIcon3 = new H.map.Icon(svgMarkup3, { anchor: { x: 15, y: 15 } });
+    var svgMarkup4 = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+            'fill="#3ACCE1" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+        dotIcon4 = new H.map.Icon(svgMarkup4, { anchor: { x: 15, y: 15 } });
+    var svgMarkup5 = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+            'fill="#3497FD" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+        dotIcon5 = new H.map.Icon(svgMarkup5, { anchor: { x: 15, y: 15 } });
 
     // Add a marker for each maneuver
     for (i = 0; i < route.leg.length; i += 1) {
@@ -200,6 +249,31 @@ function addManueversToMap(route) {
             maneuver = route.leg[i].maneuver[j];
             // Add a marker to the maneuvers group
             if (maneuver.action == "arrive") {
+                var dotIcon;
+                dataPoints.forEach(function(item) {
+                    if (item.X == maneuver.position.latitude
+                        && item.Y == maneuver.position.longitude) {
+                        switch (item.PointType.Name) {
+                            case "Интеллигент":
+                                dotIcon = dotIcon1;
+                                break;
+                            case "Шопоголик":
+                                dotIcon = dotIcon2;
+                                break;
+                            case "Гик":
+                                dotIcon = dotIcon3;
+                                break;
+                            case "Гурман":
+                                dotIcon = dotIcon4;
+                                break;
+                            case "Алкаш":
+                                dotIcon = dotIcon5;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
                 var marker = new H.map.Marker({
                     lat: maneuver.position.latitude,
                     lng: maneuver.position.longitude
@@ -313,6 +387,21 @@ Number.prototype.toMMSS = function () {
 }
 
 // Now use the map as required...
-calculateRouteFromAtoB(platform);
+//calculateRouteFromAtoB(platform);
 
+function executeFunction(url, testData, method) {
 
+    $.ajax({
+        type: method,
+        url: url,
+        data: JSON.stringify(testData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            calculateRouteFromAtoBFromController(platform, data);
+        },
+        error: function (errorData) {
+            calculateRouteFromAtoBFromController(platform, errorData.responseText);
+        }
+    });
+}
