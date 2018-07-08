@@ -73,10 +73,12 @@ namespace Hakaton_Service
             };
             return JsonManager.GetJsonString(subPoint);
         }
+
         public Point GetPoint(int id)
         {
             return DataContext.Points.Include(i=>i.EventPoints).Include(i=>i.PointType).FirstOrDefault(i => i.Id == id);
         }
+
         public string AddPointType(string name)
         {
             var pointType = DataContext.PointTypes
@@ -101,13 +103,13 @@ namespace Hakaton_Service
             var userPerformances = DataContext.UserPerformances
                 .Include(p => p.User)
                 .Include(p => p.Performance)
-                .Where(p => p.User.Id == id)
+                .Where(p => p.User.Id == id && p.Level > 0)
                 .ToList();
             if (!userPerformances.Any())
             {
                 return null;
             }
-            
+
             var performancePoints =
                 DataContext.PerformancePoints
                     .Include(p => p.Performance)
@@ -115,7 +117,7 @@ namespace Hakaton_Service
                     .Include(p => p.Point.PointType)
                     .Include(p => p.Point.EventPoints)
                     .ToList()
-                    .Where(p => userPerformances.Exists(u=>u.Performance.Id == p.Performance.Id))
+                    .Where(p => userPerformances.Exists(u => u.Performance.Id == p.Performance.Id))
                     .ToList();
             if (!performancePoints.Any())
             {
@@ -153,6 +155,13 @@ namespace Hakaton_Service
                         }).ToList()
                     })
                 .ToList();
+            points.Add(new SubPoint
+            {
+                Name = "Я",
+                Description = "Тут находишься ты",
+                X = x,
+                Y = y
+            });
             var sortWayPoints = SortWayPoints(points, x, y);
             return JsonManager.GetJsonString(sortWayPoints);
         }
@@ -212,14 +221,14 @@ namespace Hakaton_Service
             AddPoint("Ресторан Кухня Family", "Европейская, итальянская, русская, японская, домашняя, смешанная",
                 45.044981, 41.975774, DateTime.Now, false, "Кафе",
                 new[] {"Гурман"});
-            
+
             //AddPoint("Кино Max", "Кинотеатр",
             //    45.050106, 41.985191, DateTime.Now, false, "Кинотеатр",
             //    new[] {"Интеллигент"});
             AddPoint("Моя Страна. Моя История", "Музей",
                 45.048483, 41.982150, DateTime.Now, false, "Музей",
                 new[] {"Интеллигент"});
-            
+
             AddPoint("Бар XxxX", "Бар, паб, ночной клуб",
                 45.050035, 41.983132, DateTime.Now, false, "Бар",
                 new[] {"Алкаш"});
