@@ -53,6 +53,21 @@ namespace Hakaton_View.Controllers
                 return points;
             }
         }
+
+        public ActionResult GetEventsPoint(long idPoint)
+        {
+            if (SessionAccount.GetId() == null) return null;
+            var user = SessionAccount.GetCurretAccount();
+            if (user == null || user.Id == 0)
+            {
+                return null;
+            }
+            else
+            {
+                var events = _dataManager.EventManager.GetEventsForPoint(idPoint);
+                return View();
+            }
+        }
         
         // POST: Map
         [HttpPost]
