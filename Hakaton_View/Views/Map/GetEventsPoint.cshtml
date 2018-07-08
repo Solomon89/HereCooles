@@ -4,15 +4,25 @@
 
                 ViewBag.Title = "Задания";
 }
-<div class="container" style="height:186pt; background-image:url(../../images/Кухня.JPG)">
+<div class="container" style="height:250pt; background-image:url(../../images/Кухня.JPG); background-repeat:no-repeat">
 
 </div>
-@foreach (var item in Model.EventPoints)
+@foreach (var item in Model?.EventPoints)
 {
-    <div class="container mainArea">
-        @item.Description
-    </div >
-    <div style="background-image:url(../../images/j.PNG);height:15pt;">
+<div class="mainArea" style="margin-top:50pt">
 
+    <div class="container " >
+        <div class="mainArea" style="height:80pt;font-size:15pt; color:#78849E">
+            @item.Description
+        </div>
     </div>
-}
+    <div class="container">
+        <p>
+            <button class="btn btn-default">Удалить</button>
+            <button class="btn btn-default">Выполнить</button>
+        </p>
+       
+    </div>
+
+</div>
+    }

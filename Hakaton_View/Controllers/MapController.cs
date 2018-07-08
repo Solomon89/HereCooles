@@ -64,7 +64,9 @@ namespace Hakaton_View.Controllers
             }
             else
             {
-                var events = _dataManager.EventManager.GetEventsForPoint(idPoint);
+                var events = _dataManager.PointManager.GetPoint((int)idPoint);
+                ViewData.Model = events;
+
                 return View();
             }
         }
