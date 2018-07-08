@@ -213,7 +213,7 @@ function addManueversToMap(route) {
             '<circle cx="8" cy="8" r="8" ' +
             'fill="#C840E9" stroke="white" stroke-width="1"  />' +
             '</svg>',
-        dotIcon1 = new H.map.Icon(svgMarkup1, { anchor: { x: 15, y: 15 } }),
+        dotIcon1 = new H.map.Icon(svgMarkup1, { anchor: { x: 30, y: 30 } }),
         group = new H.map.Group(),
         i,
         j;
@@ -222,25 +222,25 @@ function addManueversToMap(route) {
             '<circle cx="8" cy="8" r="8" ' +
             'fill="#FF4F9A" stroke="white" stroke-width="1"  />' +
             '</svg>',
-        dotIcon2 = new H.map.Icon(svgMarkup2, { anchor: { x: 15, y: 15 } });
+        dotIcon2 = new H.map.Icon(svgMarkup2, { anchor: { x: 30, y: 30 } });
     var svgMarkup3 = '<svg width="18" height="18" ' +
             'xmlns="http://www.w3.org/2000/svg">' +
             '<circle cx="8" cy="8" r="8" ' +
             'fill="#FF9057" stroke="white" stroke-width="1"  />' +
             '</svg>',
-        dotIcon3 = new H.map.Icon(svgMarkup3, { anchor: { x: 15, y: 15 } });
+        dotIcon3 = new H.map.Icon(svgMarkup3, { anchor: { x: 30, y: 30 } });
     var svgMarkup4 = '<svg width="18" height="18" ' +
             'xmlns="http://www.w3.org/2000/svg">' +
             '<circle cx="8" cy="8" r="8" ' +
             'fill="#3ACCE1" stroke="white" stroke-width="1"  />' +
             '</svg>',
-        dotIcon4 = new H.map.Icon(svgMarkup4, { anchor: { x: 15, y: 15 } });
+        dotIcon4 = new H.map.Icon(svgMarkup4, { anchor: { x: 30, y: 30 } });
     var svgMarkup5 = '<svg width="18" height="18" ' +
             'xmlns="http://www.w3.org/2000/svg">' +
             '<circle cx="8" cy="8" r="8" ' +
             'fill="#3497FD" stroke="white" stroke-width="1"  />' +
             '</svg>',
-        dotIcon5 = new H.map.Icon(svgMarkup5, { anchor: { x: 15, y: 15 } });
+        dotIcon5 = new H.map.Icon(svgMarkup5, { anchor: { x: 30, y: 30 } });
 
     // Add a marker for each maneuver
     for (i = 0; i < route.leg.length; i += 1) {
