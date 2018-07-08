@@ -246,3 +246,10 @@ input[type='range'] {
     color: #454F63;
     box-shadow:none;
 }
+.taskModel {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 250pt;
+    color:#2A2E43;
+}

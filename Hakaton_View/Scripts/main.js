@@ -292,13 +292,28 @@ function addManueversToMap(route) {
 
     group.addEventListener('tap', function (evt) {
         map.setCenter(evt.target.getPosition());
-        openBubble(
+
+        ShowDescription(
             evt.target.getPosition(), evt.target.instruction);
     }, false);
 
     // Add the maneuvers group to the map
     map.addObject(group);
 }
+function ShowDescription(id) {
+    var testData = {
+        'idStr': id
+    }
+        $.ajax({
+            type: "POST",
+            url: "../../Map/TaskOnMap",
+            data: JSON.stringify(testData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: alert("sss"),
+            error: alert("sss")
+        });
+    }
 
 
 /**

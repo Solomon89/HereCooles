@@ -68,11 +68,14 @@ namespace Hakaton_Service
                 X = point.X,
                 PointType = type,
                 PerformancePoint =
-                    DataContext.PerformancePoints.Include(p => p.Point).First(p => p.Point.Id == point.Id)
+                DataContext.PerformancePoints.Include(p => p.Point).First(p => p.Point.Id == point.Id)
             };
             return JsonManager.GetJsonString(subPoint);
         }
-
+        public Point GetPoint(int id)
+        {
+            return DataContext.Points.Include(i=>i.EventPoints).FirstOrDefault(i => i.Id == id);
+        }
         public string AddPointType(string name)
         {
             var pointType = DataContext.PointTypes

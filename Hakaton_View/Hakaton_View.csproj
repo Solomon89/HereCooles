@@ -186,6 +186,7 @@
     <Content Include="Views\Login\Registration.cshtml" />
     <Content Include="Views\Map\Index.cshtml" />
     <Content Include="Views\Login\Distribution.cshtml" />
+    <Content Include="Views\Map\TaskOnMap.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

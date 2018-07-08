@@ -1,5 +1,6 @@
 ﻿using Hakaton_Db.Models;
 using Hakaton_Service;
+using Hakaton_Service.SubModels;
 using Hakaton_View.Controllers.Manage;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -59,6 +60,13 @@ namespace Hakaton_View.Controllers
             ViewBag.Map = true;
 
             return View(points);
+        }
+        [HttpPost]
+        public ActionResult TaskOnMap(string idStr)
+        {
+            int id = int.Parse(idStr);
+            ViewData.Model = _dataManager.PointManager.GetPoint(id);
+            return PartialView();
         }
     }
 }
