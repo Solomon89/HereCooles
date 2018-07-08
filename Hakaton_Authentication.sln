@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hakaton_Db", "Hakaton_Authentication\Hakaton_Db.csproj", "{463A1AB9-AAE4-4E4E-BBC5-A4362BD5C286}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hakaton_Client", "Hakaton_Client\Hakaton_Client.csproj", "{F8A23BA7-9BEE-4DC9-82AB-7C747519154B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hakaton_Service", "Hakaton_Service\Hakaton_Service.csproj", "{B68144D7-3EBE-4131-A2F3-18DBC28190EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hakaton_View", "Hakaton_View\Hakaton_View.csproj", "{B5023F75-6CB0-45B4-84ED-86FBB453C777}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{463A1AB9-AAE4-4E4E-BBC5-A4362BD5C286}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{463A1AB9-AAE4-4E4E-BBC5-A4362BD5C286}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{463A1AB9-AAE4-4E4E-BBC5-A4362BD5C286}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{463A1AB9-AAE4-4E4E-BBC5-A4362BD5C286}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8A23BA7-9BEE-4DC9-82AB-7C747519154B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8A23BA7-9BEE-4DC9-82AB-7C747519154B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8A23BA7-9BEE-4DC9-82AB-7C747519154B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8A23BA7-9BEE-4DC9-82AB-7C747519154B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B68144D7-3EBE-4131-A2F3-18DBC28190EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68144D7-3EBE-4131-A2F3-18DBC28190EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68144D7-3EBE-4131-A2F3-18DBC28190EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68144D7-3EBE-4131-A2F3-18DBC28190EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5023F75-6CB0-45B4-84ED-86FBB453C777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5023F75-6CB0-45B4-84ED-86FBB453C777}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5023F75-6CB0-45B4-84ED-86FBB453C777}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5023F75-6CB0-45B4-84ED-86FBB453C777}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {22927035-CDC8-48EB-A2DF-175D69A508F3}
+	EndGlobalSection
+EndGlobal
