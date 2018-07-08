@@ -1,9 +1,10 @@
 ﻿using Hakaton_Db;
 using Hakaton_Db.Models;
+using Hakaton_Service.SubModels;
 using System;
 using System.Data.Entity;
+using System.Device.Location;
 using System.Linq;
-using Hakaton_Service.SubModels;
 
 namespace Hakaton_Service
 {
@@ -83,14 +84,15 @@ namespace Hakaton_Service
             return JsonManager.GetJsonString(pointType);
         }
 
-        public string GetNearestPoints(double x, double y, long id, double radius = 1)
+        public string GetNearestPoints(double x, double y, long id, double radius = 1000)
         {
-            var min = DataContext.Points.Min(p => CalcDistance(x, y, p.X, p.Y));
+            CheckPoints();
             var user = DataContext.Users.FirstOrDefault(u => u.Id == id);
             if (user == null) return JsonManager.JsonError($"Пользователь {id} не найден!");
 
             var userPerformances = DataContext.UserPerformances
                 .Include(p => p.User)
+                .Include(p => p.Performance)
                 .Where(p => p.User.Id == id)
                 .ToList();
             var maxLvl = userPerformances.Max(m => m.Level);
@@ -101,10 +103,17 @@ namespace Hakaton_Service
                     .Include(p => p.Performance)
                     .Include(p => p.Point)
                     .Include(p => p.Point.EventPoints)
-                    .Where(p => p.Performance.Id == performance.Id)
+                    .Where(p => p.Performance.Id == performance.Performance.Id)
                     .ToList();
 
-            var points = performancePoints.Where(p => Math.Abs(CalcDistance(x, y, p.Point.X, p.Point.Y) - min) < radius)
+            var geoMe = new GeoCoordinate(x, y);
+            var points = performancePoints
+                .Where(p =>
+                {
+                    //Расстояние в метрах
+                    var distanceTo = geoMe.GetDistanceTo(new GeoCoordinate(p.Point.X, p.Point.Y));
+                    return distanceTo < radius;
+                })
                 .Select(p => new SubPoint
                 {
                     Name = p.Point.Name,
@@ -126,19 +135,30 @@ namespace Hakaton_Service
             return JsonManager.GetJsonString(points);
         }
 
-        /// <summary>
-        /// Расстояние в километрах
-        /// </summary>
-        /// <param name="x1"></param>
-        /// <param name="y1"></param>
-        /// <param name="x2"></param>
-        /// <param name="y2"></param>
-        /// <returns></returns>
-        private double CalcDistance(double x1, double y1, double x2, double y2)
+        private void CheckPoints()
         {
-            const double radEarth = 6371.008;
-            var acos = Math.Acos(Math.Sin(x1) * Math.Sin(x2) + Math.Cos(x1) * Math.Cos(x2) * Math.Cos(y1 - y2));
-            return radEarth * acos;
+            if (!DataContext.PointTypes.Any(x => x.Name == "Кафе"))
+            {
+                AddPointType("Кафе");
+            }
+
+            var arrKafe = new[] {"Solo", "Go! Вафли", "Хлебная лавка", "Rione", "Sushi Time", "Макдоналдс"};
+
+            if (!DataContext.Points.All(x => arrKafe.Contains(x.Name)))
+            {
+                AddPoint("Solo", "Караоке-клуб Solo", 45.048694, 41.982936, DateTime.Now, false, "Кафе",
+                    new[] {"Гурман"});
+                AddPoint("Go! Вафли", "Go! Вафли, Кафе, кофейня, кондитерская", 45.048014, 41.984812, DateTime.Now,
+                    false, "Кафе", new[] {"Гурман"});
+                AddPoint("Хлебная лавка", "Булочная, пекарня", 45.047970, 41.984375, DateTime.Now, false, "Кафе",
+                    new[] {"Гурман"});
+                AddPoint("Rione", "Пиццерия, кафе, доставка еды, бизнес-ланч, кофе с собой", 45.038063, 41.977236,
+                    DateTime.Now, false, "Кафе", new[] {"Гурман"});
+                AddPoint("Sushi Time", "Доставка еды и обедов, пиццерия", 45.022342, 41.964276, DateTime.Now, false,
+                    "Кафе", new[] {"Гурман"});
+                AddPoint("Макдоналдс", "Быстрое питание, sресторан", 45.050131, 41.985521, DateTime.Now, false, "Кафе",
+                    new[] {"Гурман"});
+            }
         }
     }
 }

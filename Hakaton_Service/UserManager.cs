@@ -2,6 +2,7 @@
 using Hakaton_Db.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using User = Hakaton_Db.Models.User;
 
@@ -20,7 +21,7 @@ namespace Hakaton_Service
         /// <param name="login"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public User Register(string fio, string login, string password,ref string message)
+        public User Register(string fio, string login, string password, ref string message)
         {
             var user = DataContext.Users
                 .FirstOrDefault(
@@ -30,6 +31,7 @@ namespace Hakaton_Service
                 message = $"Пользователь с ником {login} уже зарегистрирован";
                 return null;
             }
+
             user = new User
             {
                 Fio = fio,
@@ -116,34 +118,46 @@ namespace Hakaton_Service
         {
             CheckPerfomance();
             var user = DataContext.Users.First(x => x.Id == userId);
-            foreach (var tuple in perfList)
+            foreach (var item in perfList)
             {
-                var performance = DataContext.Performances.First(x => x.Name.Equals(tuple.Key));
+                var performance = DataContext.Performances.First(x => x.Name.Equals(item.Key));
                 var userPerformance = new UserPerformance
                 {
                     Performance = performance,
-                    Level = tuple.Value,
+                    Level = item.Value,
                     User = user
                 };
-                DataContext.UserPerformances.Add(userPerformance);
+                var usrPerf = DataContext.UserPerformances
+                    .Include(x => x.User)
+                    .Include(x => x.Performance)
+                    .FirstOrDefault(x => x.User.Id == userId && x.Performance.Id == performance.Id);
+                if (usrPerf == null)
+                {
+                    DataContext.UserPerformances.Add(userPerformance);   
+                }
+                else
+                {
+                    usrPerf.Level = item.Value;
+                }
             }
+
             DataContext.SaveChanges();
         }
+
         /// <summary>
         /// Инциализация свойств человека
         /// </summary>
         private void CheckPerfomance()
         {
-            if (DataContext.Performances.Count() == 0)
+            if (!DataContext.Performances.Any())
             {
-                DataContext.Performances.Add(new Performance() { Name = "Интеллигент" });
-                DataContext.Performances.Add(new Performance() { Name = "Шопоголик" });
-                DataContext.Performances.Add(new Performance() { Name = "Гик" });
-                DataContext.Performances.Add(new Performance() { Name = "Гурман" });
-                DataContext.Performances.Add(new Performance() { Name = "Алкаш" });
+                DataContext.Performances.Add(new Performance() {Name = "Интеллигент"});
+                DataContext.Performances.Add(new Performance() {Name = "Шопоголик"});
+                DataContext.Performances.Add(new Performance() {Name = "Гик"});
+                DataContext.Performances.Add(new Performance() {Name = "Гурман"});
+                DataContext.Performances.Add(new Performance() {Name = "Алкаш"});
                 DataContext.SaveChanges();
             }
-            
         }
     }
 }
