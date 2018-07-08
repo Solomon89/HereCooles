@@ -112,11 +112,13 @@
     <Content Include="fonts\linecons\linecons.svg" />
     <Content Include="fonts\linecons\lte-ie7.js" />
     <Content Include="fonts\linecons\Read Me.txt" />
+    <Content Include="images\j.PNG" />
     <Content Include="images\sliders-h-solid.svg" />
     <Content Include="images\Баллы.svg" />
     <Content Include="images\Выйти.svg" />
     <Content Include="images\задания.svg" />
     <Content Include="images\карта.svg" />
+    <Content Include="images\Кухня.JPG" />
     <Content Include="images\О нас.svg" />
     <Content Include="images\Профиль.JPG" />
     <Content Include="images\Профиль.png" />
@@ -189,6 +191,7 @@
     <Content Include="Views\Login\Distribution.cshtml" />
     <Content Include="Views\Map\TaskOnMap.cshtml" />
     <Content Include="Views\Login\ProfileInfo.cshtml" />
+    <Content Include="Views\Map\GetEventsPoint.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

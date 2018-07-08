@@ -250,7 +250,7 @@ input[type='range'] {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 120pt;
+    height: 150pt;
     background-color: #2A2E43;
     color: white;
     text-align: center;
@@ -259,7 +259,7 @@ input[type='range'] {
 }
 .taskModel>div:nth-child(1)
 {
-    margin-top:20pt;
+    margin-top:15pt;
     font-size:14pt;
 }
     .taskModel > div:nth-child(2) {

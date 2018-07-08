@@ -1,0 +1,18 @@
+﻿@model Hakaton_Db.Models.Point
+@{
+                /**/
+
+                ViewBag.Title = "Задания";
+}
+<div class="container" style="height:186pt; background-image:url(../../images/Кухня.JPG)">
+
+</div>
+@foreach (var item in Model.EventPoints)
+{
+    <div class="container mainArea">
+        @item.Description
+    </div >
+    <div style="background-image:url(../../images/j.PNG);height:15pt;">
+
+    </div>
+}
