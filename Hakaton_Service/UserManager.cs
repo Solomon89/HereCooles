@@ -112,22 +112,38 @@ namespace Hakaton_Service
             return JsonManager.GetJsonString(user);
         }
 
-        public void SetPerformancesUser(long userId, List<(string, int)> perfList)
+        public void SetPerformancesUser(long userId, Dictionary<string, int> perfList)
         {
+            CheckPerfomance();
             var user = DataContext.Users.First(x => x.Id == userId);
             foreach (var tuple in perfList)
             {
-                var performance = DataContext.Performances.First(x => x.Name.Equals(tuple.Item1));
+                var performance = DataContext.Performances.First(x => x.Name.Equals(tuple.Key));
                 var userPerformance = new UserPerformance
                 {
                     Performance = performance,
-                    Level = tuple.Item2,
+                    Level = tuple.Value,
                     User = user
                 };
                 DataContext.UserPerformances.Add(userPerformance);
             }
-
             DataContext.SaveChanges();
+        }
+        /// <summary>
+        /// Инциализация свойств человека
+        /// </summary>
+        private void CheckPerfomance()
+        {
+            if (DataContext.Performances.Count() == 0)
+            {
+                DataContext.Performances.Add(new Performance() { Name = "Интеллигент" });
+                DataContext.Performances.Add(new Performance() { Name = "Шопоголик" });
+                DataContext.Performances.Add(new Performance() { Name = "Гик" });
+                DataContext.Performances.Add(new Performance() { Name = "Гурман" });
+                DataContext.Performances.Add(new Performance() { Name = "Алкаш" });
+                DataContext.SaveChanges();
+            }
+            
         }
     }
 }

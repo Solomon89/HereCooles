@@ -1,6 +1,7 @@
 ﻿using Hakaton_Db.Models;
 using Hakaton_Service;
 using Hakaton_View.Controllers.Manage;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Hakaton_View.Controllers
@@ -29,7 +30,7 @@ namespace Hakaton_View.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            if (SessionAccount.GetId() != null) return Redirect(HomeIndex);
+            if (SessionAccount.GetId() == null) return Redirect(HomeIndex);
             user = _dataManager.UserManager.Authenticate(user.Login, user.Password);
             if (user != null)
             {
@@ -79,22 +80,34 @@ namespace Hakaton_View.Controllers
         [HttpGet]
         public ActionResult Distribution()
         {
-            //if (SessionAccount.GetId() != null) return Redirect(HomeIndex);
+            if (SessionAccount.GetId() == null) return Redirect(LoginPage);
             var user = SessionAccount.GetCurretAccount();
+           
             if (user == null)
             {
                 user = new User();
             }
+           
             return View(user);
         }
         [HttpPost]
         public ActionResult Distribution(int  range1 , int range2,int range3, int range4, int range5)
         {
-            if (SessionAccount.GetId() != null) return Redirect(LoginPage);
+            if (SessionAccount.GetId() == null) return Redirect(LoginPage);
             var user = SessionAccount.GetCurretAccount();
             if (user == null)
             {
                 user = new User();
+            }
+            else
+            {
+                Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                dictionary.Add("Интеллигент", range1);
+                dictionary.Add("Шопоголик", range2);
+                dictionary.Add("Гик", range3);
+                dictionary.Add("Гурман", range4);
+                dictionary.Add("Алкаш", range5);
+                _dataManager.UserManager.SetPerformancesUser(user.Id, dictionary);
             }
             return View(user);
         }
