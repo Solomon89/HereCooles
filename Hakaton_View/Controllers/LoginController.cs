@@ -8,8 +8,8 @@ namespace Hakaton_View.Controllers
     public class LoginController : Controller
     {
         private readonly DataManager _dataManager;
-        private const string HomeIndex = "/Home/Index";
-
+        private const string HomeIndex = "/Map/Index";
+        private const string LoginPage = "/Login/Login";
         public LoginController()
         {
             _dataManager = new DataManager();
@@ -29,6 +29,7 @@ namespace Hakaton_View.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
+            if (SessionAccount.GetId() != null) return Redirect(HomeIndex);
             user = _dataManager.UserManager.Authenticate(user.Login, user.Password);
             if (user != null)
             {
@@ -74,6 +75,28 @@ namespace Hakaton_View.Controllers
             SessionAccount.AuthenticateAccount(user);
             TempData["sAlertMessage"] = $"Добро пожаловать, {SessionAccount.GetFio()}!";
             return Redirect("/Account/ProfilePerson");
+        }
+        [HttpGet]
+        public ActionResult Distribution()
+        {
+            //if (SessionAccount.GetId() != null) return Redirect(HomeIndex);
+            var user = SessionAccount.GetCurretAccount();
+            if (user == null)
+            {
+                user = new User();
+            }
+            return View(user);
+        }
+        [HttpPost]
+        public ActionResult Distribution(int  range1 , int range2,int range3, int range4, int range5)
+        {
+            if (SessionAccount.GetId() != null) return Redirect(LoginPage);
+            var user = SessionAccount.GetCurretAccount();
+            if (user == null)
+            {
+                user = new User();
+            }
+            return View(user);
         }
     }
 }

@@ -1,0 +1,135 @@
+﻿@model Hakaton_Db.Models.User
+@{
+    ViewBag.Title = "Распределение";
+}
+@using (Html.BeginForm())
+{
+    <div class="container">
+
+        <div class="col-xs-4 balls" style="padding-left:0">
+            У тебя есть
+        </div>
+        <div class="col-xs-3 NumbersBalls" id="totalBall">
+            0
+        </div>
+        <div class="col-xs-5 balls" style="padding-right:0">
+            баллов
+        </div>
+    </div>
+
+
+    <div class="container ">
+
+        <div class="col-xs-12 mainArea">
+            <div class="container">
+
+                <div class="col-xs-12 ">
+                    <div>
+                        Интеллигент
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+
+                <div class="col-xs-12">
+                    <div>
+                        <span id="textInput1" class="points" style="position: absolute">2</span>
+                        <input type="range" value="2" name="range1" min="0" max="10" oninput="updateTextInput('textInput1',this.value);">
+                    </div>
+                </div>
+
+            </div>
+            <div class="container">
+
+                <div class="col-xs-12">
+                    <div>
+                        Шопоголик
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+
+                <div class="col-xs-12">
+                    <div>
+                        <span id="textInput2" class="points" style="position: absolute"> 5 </span>
+                        <input type="range" min="0" max="10" value="0" name="range2" oninput="updateTextInput('textInput2',this.value);">
+                    </div>
+                </div>
+
+            </div>
+            <div class="container">
+
+                <div class="col-xs-12">
+                    <div>
+                        Гик
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+
+                <div class="col-xs-12">
+                    <div>
+                        <span id="textInput3" class="points" style="position: absolute">1</span>
+                        <input type="range" min="0" max="10" value="0" name="range3" oninput="updateTextInput('textInput3',this.value);">
+                    </div>
+                </div>
+
+            </div>
+            <div class="container">
+
+                <div class="col-xs-12">
+                    <div>
+                        Гурман
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+
+                <div class="col-xs-12">
+                    <div>
+                        <span id="textInput4" class="points" style="position: absolute">1</span>
+                        <input type="range" min="0" max="10" value="0" name="range4" oninput="updateTextInput('textInput4',this.value);">
+                    </div>
+                </div>
+
+            </div>
+            <div class="container">
+
+                <div class="col-xs-12">
+                    <div>
+                        Алкаш
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+
+                <div class="col-xs-12">
+                    <div>
+                        <span id="textInput5" class="points" style="position: absolute" value="0"></span>
+                        <input type="range" min="0" max="10" value="0" name="range5" oninput="updateTextInput('textInput5',this.value);">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+    <div class="container buttonArea">
+        <button class="btn btn-default">
+            ПОЕХАЛИ
+        </button>
+    </div>
+}
+<script>
+    function updateTextInput(id, val) {
+        var range1 = parseInt(document.getElementsByName("range1")[0].value);
+        var range2 = parseInt(document.getElementsByName("range2")[0].value);
+        var range3 = parseInt(document.getElementsByName("range3")[0].value);
+        var range4 = parseInt(document.getElementsByName("range4")[0].value);
+        var range5 = parseInt(document.getElementsByName("range5")[0].value);
+        document.getElementById(id).innerHTML = val;
+        document.getElementById("totalBall").innerHTML = range1 + range2 + range3 + range4 + range5;
+    }
+</script>

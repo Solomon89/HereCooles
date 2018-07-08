@@ -30,7 +30,7 @@ namespace Hakaton_View.Controllers.Manage
         public static void AuthenticateAccount(User user)
         {
             var curAcc = CurrentSession();
-            if (curAcc != null || user == null) return;
+            if (curAcc?.Account?.Login != null || user == null) return;
             Accounts.Add(new SessionInfo()
             {
                 Account = user,

@@ -125,6 +125,7 @@
     <Content Include="fonts\Segoe UI.otf" />
     <Content Include="fonts\Segoe UI.ttf" />
     <Content Include="fonts\Segoe UI.woff" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -156,6 +157,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Login\Registration.cshtml" />
     <Content Include="Views\Map\Index.cshtml" />
+    <Content Include="Views\Login\Distribution.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
