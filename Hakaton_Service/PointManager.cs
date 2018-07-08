@@ -106,16 +106,15 @@ namespace Hakaton_Service
             {
                 return null;
             }
-            var maxLvl = userPerformances.Max(m => m.Level);
-            var performance = userPerformances.FirstOrDefault(p => p.Level == maxLvl);
-
+            
             var performancePoints =
                 DataContext.PerformancePoints
                     .Include(p => p.Performance)
                     .Include(p => p.Point)
                     .Include(p => p.Point.PointType)
                     .Include(p => p.Point.EventPoints)
-                    .Where(p => p.Performance.Id == performance.Performance.Id)
+                    .ToList()
+                    .Where(p => userPerformances.Exists(u=>u.Performance.Id == p.Performance.Id))
                     .ToList();
             if (!performancePoints.Any())
             {
@@ -156,14 +155,15 @@ namespace Hakaton_Service
 
             return JsonManager.GetJsonString(points);
         }
-
+        
         private void CheckPoints()
         {
-            if (!DataContext.PointTypes.Any(x => x.Name == "Кафе"))
-            {
-                AddPointType("Кафе");
-            }
-            
+            AddPointType("Кафе");
+            AddPointType("Кинотеатр");
+            AddPointType("Музей");
+            AddPointType("Бар");
+            AddPointType("Книжный магазин");
+
             AddPoint("Solo", "Караоке-клуб Solo", 45.048694, 41.982936, DateTime.Now, false, "Кафе",
                 new[] {"Гурман"});
             AddPoint("Go! Вафли", "Go! Вафли, Кафе, кофейня, кондитерская", 45.048014, 41.984812, DateTime.Now,
@@ -176,6 +176,24 @@ namespace Hakaton_Service
                 "Кафе", new[] {"Гурман"});
             AddPoint("Макдоналдс", "Быстрое питание, sресторан", 45.050131, 41.985521, DateTime.Now, false, "Кафе",
                 new[] {"Гурман"});
+            AddPoint("Ресторан Кухня Family", "Европейская, итальянская, русская, японская, домашняя, смешанная",
+                45.044981, 41.975774, DateTime.Now, false, "Кафе",
+                new[] {"Гурман"});
+            
+            //AddPoint("Кино Max", "Кинотеатр",
+            //    45.050106, 41.985191, DateTime.Now, false, "Кинотеатр",
+            //    new[] {"Интеллигент"});
+            AddPoint("Моя Страна. Моя История", "Музей",
+                45.048483, 41.982150, DateTime.Now, false, "Музей",
+                new[] {"Интеллигент"});
+            
+            AddPoint("Бар XxxX", "Бар, паб, ночной клуб",
+                45.050035, 41.983132, DateTime.Now, false, "Бар",
+                new[] {"Алкаш"});
+
+            AddPoint("Wacko shop", "Книжный магазиндетские игрушки и игры",
+                45.050129, 41.985246, DateTime.Now, false, "Книжный магазин",
+                new[] {"Гик"});
         }
     }
 }
