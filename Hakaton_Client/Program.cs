@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
+using Hakaton_Db.Models;
 using Hakaton_Service;
 
 namespace Hakaton_Client
@@ -12,6 +14,10 @@ namespace Hakaton_Client
             {
                 var str = "";
                 dataManager.UserManager.Register("Горшков Сергей Николаевич", "qwe@mail.ru", "123", ref str);
+                var eventsForPoint =
+                    JsonManager.FromJson<List<EventPoint>>(
+                        dataManager.EventManager.GetEventsForPoint("Ресторан Кухня Family"));
+
                 dataManager.PointManager.AddPointType("Кафе");
                 var point = dataManager.PointManager.AddPoint("Solo", "desc", 45.048694, 41.982936, DateTime.Now, false,
                     "Кафе", new[] {"Гурман"});

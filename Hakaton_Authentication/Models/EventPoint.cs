@@ -20,6 +20,9 @@ namespace Hakaton_Db.Models
         public string Name { get; set; }
 
         [DataMember]
+        public string Description { get; set; }
+
+        [DataMember]
         public DateTime DateCreate { get; set; }
 
         [DataMember]
@@ -53,7 +56,7 @@ namespace Hakaton_Db.Models
             }
 
             return x.Name == y.Name && x.IsPermanent == y.IsPermanent && x.DateCreate == y.DateCreate &&
-                   x.Point.Equals(y.Point) && x.ScoreAward == y.ScoreAward && x.TimeLeft == y.TimeLeft &&
+                   x.ScoreAward == y.ScoreAward && x.TimeLeft == y.TimeLeft &&
                    x.EventPointType.Equals(y.EventPointType);
         }
 

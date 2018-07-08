@@ -49,10 +49,11 @@ namespace Hakaton_View.Controllers
             else
             {
                 var points = _dataManager.PointManager.GetNearestPoints(double.Parse(x), double.Parse(y), user.Id);
+
                 return points;
             }
         }
-
+        
         // POST: Map
         [HttpPost]
         public ActionResult Index(List<Point> points)
