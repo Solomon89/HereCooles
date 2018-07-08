@@ -74,7 +74,7 @@ namespace Hakaton_Service
         }
         public Point GetPoint(int id)
         {
-            return DataContext.Points.Include(i=>i.EventPoints).FirstOrDefault(i => i.Id == id);
+            return DataContext.Points.Include(i=>i.EventPoints).Include(i=>i.PointType).FirstOrDefault(i => i.Id == id);
         }
         public string AddPointType(string name)
         {

@@ -116,5 +116,10 @@ namespace Hakaton_View.Controllers
 
             return Redirect(HomeIndex);
         }
+        public ActionResult ProfileInfo()
+        {
+            ViewBag.Map = true;
+            return View();
+        }
     }
 }

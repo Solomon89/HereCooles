@@ -119,6 +119,7 @@
     <Content Include="images\карта.svg" />
     <Content Include="images\О нас.svg" />
     <Content Include="images\Профиль.JPG" />
+    <Content Include="images\Профиль.png" />
     <Content Include="images\Профиль.svg" />
     <Content Include="Scripts\classie.js" />
     <Content Include="Scripts\main.js" />
@@ -187,6 +188,7 @@
     <Content Include="Views\Map\Index.cshtml" />
     <Content Include="Views\Login\Distribution.cshtml" />
     <Content Include="Views\Map\TaskOnMap.cshtml" />
+    <Content Include="Views\Login\ProfileInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

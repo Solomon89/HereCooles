@@ -65,7 +65,8 @@ namespace Hakaton_View.Controllers
         public ActionResult TaskOnMap(string idStr)
         {
             int id = int.Parse(idStr);
-            ViewData.Model = _dataManager.PointManager.GetPoint(id);
+            var points = _dataManager.PointManager.GetPoint(id);
+            ViewData.Model = points;
             return PartialView();
         }
     }

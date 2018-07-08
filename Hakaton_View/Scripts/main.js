@@ -296,7 +296,7 @@ function addManueversToMap(route) {
         map.setCenter(evt.target.getPosition());
 
         ShowDescription(
-            evt.target.getPosition(), evt.target.instruction);
+             evt.target.instruction);
     }, false);
 
     // Add the maneuvers group to the map
@@ -312,8 +312,14 @@ function ShowDescription(id) {
             data: JSON.stringify(testData),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: alert("sss"),
-            error: alert("sss")
+            success: function (data, status) {
+
+                $("#decription").html(data);
+            },
+            error: function (errorData) {
+
+                $("#decription").html(errorData.responseText);
+            }
         });
     }
 
