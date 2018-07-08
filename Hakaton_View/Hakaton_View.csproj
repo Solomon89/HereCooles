@@ -97,8 +97,12 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\clear.css" />
     <Content Include="Content\main.css" />
+    <Content Include="Content\map.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\sliders-h-solid.svg" />
+    <Content Include="Scripts\main.js" />
     <Content Include="fonts\Gibson-Regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\Segoe UI.svg" />
@@ -151,6 +155,7 @@
     <Content Include="Views\Menu\Menu.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Login\Registration.cshtml" />
+    <Content Include="Views\Map\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

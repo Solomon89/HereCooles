@@ -30,7 +30,6 @@ namespace Hakaton_Service
                 message = $"Пользователь с ником {login} уже зарегистрирован";
                 return null;
             }
-
             user = new User
             {
                 Fio = fio,
@@ -40,7 +39,6 @@ namespace Hakaton_Service
             };
             DataContext.Users.Add(user);
             DataContext.SaveChanges();
-
             return user;
         }
 

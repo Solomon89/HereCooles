@@ -8,6 +8,12 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/main.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.cit.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1526040296" />
+    <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+    <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+    <link href="~/Content/map.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <nav class="navbar navbar-default">
@@ -30,12 +36,20 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-
-    <div class="container body-content">
+    @if (ViewBag.Map == true)
+    {
         @RenderBody()
-    </div>
+    }
+    else
+    {
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+    }
+
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/main.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

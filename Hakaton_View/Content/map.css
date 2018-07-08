@@ -1,0 +1,344 @@
+﻿.directions li span.arrow {
+    display: inline-block;
+    min-width: 28px;
+    min-height: 28px;
+    background-position: 0px;
+    background-image: url("../img/arrows.png");
+    position: relative;
+    top: 8px;
+}
+
+.directions li span.depart {
+    background-position: -28px;
+}
+
+.directions li span.rightUTurn {
+    background-position: -56px;
+}
+
+.directions li span.leftUTurn {
+    background-position: -84px;
+}
+
+.directions li span.rightFork {
+    background-position: -112px;
+}
+
+.directions li span.leftFork {
+    background-position: -140px;
+}
+
+.directions li span.rightMerge {
+    background-position: -112px;
+}
+
+.directions li span.leftMerge {
+    background-position: -140px;
+}
+
+.directions li span.slightRightTurn {
+    background-position: -168px;
+}
+
+.directions li span.slightLeftTurn {
+    background-position: -196px;
+}
+
+.directions li span.rightTurn {
+    background-position: -224px;
+}
+
+.directions li span.leftTurn {
+    background-position: -252px;
+}
+
+.directions li span.sharpRightTurn {
+    background-position: -280px;
+}
+
+.directions li span.sharpLeftTurn {
+    background-position: -308px;
+}
+
+.directions li span.rightRoundaboutExit1 {
+    background-position: -616px;
+}
+
+.directions li span.rightRoundaboutExit2 {
+    background-position: -644px;
+}
+
+.directions li span.rightRoundaboutExit3 {
+    background-position: -672px;
+}
+
+.directions li span.rightRoundaboutExit4 {
+    background-position: -700px;
+}
+
+.directions li span.rightRoundaboutPass {
+    background-position: -700px;
+}
+
+.directions li span.rightRoundaboutExit5 {
+    background-position: -728px;
+}
+
+.directions li span.rightRoundaboutExit6 {
+    background-position: -756px;
+}
+
+.directions li span.rightRoundaboutExit7 {
+    background-position: -784px;
+}
+
+.directions li span.rightRoundaboutExit8 {
+    background-position: -812px;
+}
+
+.directions li span.rightRoundaboutExit9 {
+    background-position: -840px;
+}
+
+.directions li span.rightRoundaboutExit10 {
+    background-position: -868px;
+}
+
+.directions li span.rightRoundaboutExit11 {
+    background-position: 896px;
+}
+
+.directions li span.rightRoundaboutExit12 {
+    background-position: 924px;
+}
+
+.directions li span.leftRoundaboutExit1 {
+    background-position: -952px;
+}
+
+.directions li span.leftRoundaboutExit2 {
+    background-position: -980px;
+}
+
+.directions li span.leftRoundaboutExit3 {
+    background-position: -1008px;
+}
+
+.directions li span.leftRoundaboutExit4 {
+    background-position: -1036px;
+}
+
+.directions li span.leftRoundaboutPass {
+    background-position: 1036px;
+}
+
+.directions li span.leftRoundaboutExit5 {
+    background-position: -1064px;
+}
+
+.directions li span.leftRoundaboutExit6 {
+    background-position: -1092px;
+}
+
+.directions li span.leftRoundaboutExit7 {
+    background-position: -1120px;
+}
+
+.directions li span.leftRoundaboutExit8 {
+    background-position: -1148px;
+}
+
+.directions li span.leftRoundaboutExit9 {
+    background-position: -1176px;
+}
+
+.directions li span.leftRoundaboutExit10 {
+    background-position: -1204px;
+}
+
+.directions li span.leftRoundaboutExit11 {
+    background-position: -1232px;
+}
+
+.directions li span.leftRoundaboutExit12 {
+    background-position: -1260px;
+}
+
+.directions li span.arrive {
+    background-position: -1288px;
+}
+
+.directions li span.leftRamp {
+    background-position: -392px;
+}
+
+.directions li span.rightRamp {
+    background-position: -420px;
+}
+
+.directions li span.leftExit {
+    background-position: -448px;
+}
+
+.directions li span.rightExit {
+    background-position: -476px;
+}
+
+.directions li span.ferry {
+    background-position: -1316px;
+}
+
+@font-face {
+    font-family: Gibson-Regular;
+    src: url(fonts/Gibson-Regular.ttf);
+}
+
+body {
+    background-color: #353A50;
+}
+
+.navbar-toggle.navbar-left {
+    float: left;
+    margin-left: 10px;
+}
+
+.navbar-default {
+    background-color: #444F63;
+    background-image: none;
+    border: none;
+    border-radius: 0;
+}
+
+    .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+        background-color: #353A50;
+    }
+
+    .navbar-default .navbar-toggle {
+        border-radius: 0;
+        border-color: none;
+        border-width: 0;
+    }
+
+    .navbar-default .navbar-brand {
+        font-family: Gibson-Regular;
+        color: white;
+    }
+
+@media (min-width: 768px) {
+    .navbar .navbar-nav {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+    }
+
+    .navbar .navbar-collapse {
+        text-align: center;
+    }
+}
+
+@font-face {
+    font-family: Gibson-Regular;
+    font-family: 'Conv_Gibson-Regular';
+    src: url('fonts/Gibson-Regular.eot');
+    src: local('☺'), url('fonts/Gibson-Regular.woff') format('woff'), url('fonts/Gibson-Regular.ttf') format('truetype'), url('fonts/Gibson-Regular.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('fonts/9404.eot');
+    src: local('☺'), url('fonts/Segoe UI.woff') format('woff'), url('fonts/Segoe UI.ttf') format('truetype'), url('fonts/Segoe UI.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: #353A50;
+}
+
+.navbar-toggle.navbar-left {
+    float: left;
+    margin-left: 10px;
+}
+
+.navbar-default {
+    background-color: #444F63;
+    background-image: none;
+    border: none;
+    border-radius: 0;
+}
+
+    .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+        background-color: #353A50;
+    }
+
+    .navbar-default .navbar-toggle {
+        border-radius: 0;
+        border-color: none;
+        border-width: 0;
+    }
+
+    .navbar-default .navbar-brand {
+        font-family: Gibson-Regular;
+        font-size: 24pt;
+        color: white;
+    }
+
+@media (min-width: 768px) {
+    .navbar .navbar-nav {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+    }
+
+    .navbar .navbar-collapse {
+        text-align: center;
+    }
+}
+
+.navbar {
+    position: relative;
+}
+
+.brand {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: white;
+}
+
+.balls {
+    font-family: Segoe UI;
+    font-size: 16pt;
+    color: white;
+    padding-top: 50px;
+}
+
+    .balls:first-child {
+        text-align: center;
+        padding-right: 0;
+    }
+
+    .balls:last-child {
+        text-align: center;
+        padding-left: 0;
+    }
+
+.NumbersBalls {
+    font-family: Segoe UI;
+    font-size: 50pt;
+    color: #3497FD;
+    text-align: center;
+}
+
+.mainArea {
+    height: 100%;
+    border-radius: 12px;
+    background-color: white;
+    font-family: Segoe UI;
+}

@@ -14,6 +14,7 @@ namespace Hakaton_View.Controllers
         // GET: Map
         public ActionResult Index()
         {
+            ViewBag.Map = true;
             return View();
         }
     }

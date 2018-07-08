@@ -219,3 +219,19 @@ input[type='range'] {
 .mainArea > .container:last-child {
     margin-bottom: 35.49pt;
 }
+.navbar-default
+{
+    margin:0;
+}
+.btn-warning {
+    background-color: white;
+    height: 35pt;
+    width: 35pt;
+    border-radius: 9pt;
+    border: none;
+    color: #454F63;
+}
+    .btn-warning:hover, .btn-warning:focus, .btn-warning:active, .btn-warning.active, .open .dropdown-toggle.btn-warning {
+        background-color: #d4d3d3;
+        color: #454F63;
+    }
