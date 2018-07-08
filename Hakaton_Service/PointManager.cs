@@ -2,6 +2,7 @@
 using Hakaton_Db.Models;
 using Hakaton_Service.SubModels;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Device.Location;
 using System.Linq;
@@ -152,10 +153,42 @@ namespace Hakaton_Service
                         }).ToList()
                     })
                 .ToList();
-
-            return JsonManager.GetJsonString(points);
+            var sortWayPoints = SortWayPoints(points, x, y);
+            return JsonManager.GetJsonString(sortWayPoints);
         }
-        
+
+        private List<SubPoint> SortWayPoints(List<SubPoint> points, double x, double y)
+        {
+            var lastGeo = new GeoCoordinate(x, y);
+            var lastPoint = new SubPoint();
+            var isOver = false;
+            var minDist = double.MaxValue;
+            var list = new List<SubPoint>();
+            while (!isOver)
+            {
+                isOver = true;
+                foreach (var point in points)
+                {
+                    var distanceTo = lastGeo.GetDistanceTo(new GeoCoordinate(point.X, point.Y));
+                    if (distanceTo < minDist)
+                    {
+                        isOver = false;
+                        minDist = distanceTo;
+                        lastPoint = point;
+                    }
+                }
+
+                if (!isOver)
+                {
+                    list.Add(lastPoint);
+                    points.Remove(lastPoint);
+                    minDist = double.MaxValue;
+                }
+            }
+
+            return list;
+        }
+
         private void CheckPoints()
         {
             AddPointType("Кафе");
