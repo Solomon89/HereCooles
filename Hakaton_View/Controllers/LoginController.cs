@@ -55,18 +55,19 @@ namespace Hakaton_View.Controllers
         [HttpGet]
         public ActionResult Registration()
         {
-            if (SessionAccount.GetId() != null) return Redirect(HomeIndex);
+            //if (SessionAccount.GetId() != null) return Redirect(HomeIndex);
             return View(new User());
         }
 
         [HttpPost]
         public ActionResult Registration(User user)
         {
-            if (SessionAccount.GetId() != null) return Redirect(HomeIndex);
-            user = JsonManager.FromJson<User>(_dataManager.UserManager.Register(user.Fio, user.Login, user.Password));
+            //if (SessionAccount.GetId() != null) return Redirect(HomeIndex);
+            string message = "";
+            user = _dataManager.UserManager.Register(user.Fio, user.Login, user.Password, ref message);
             if (user == null)
             {
-                ViewBag.wAlertMessage = @"Проверьте все поля!";
+                ViewBag.Message = message;
                 return View();
             }
 

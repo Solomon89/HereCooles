@@ -20,14 +20,15 @@ namespace Hakaton_Service
         /// <param name="login"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public string Register(string fio, string login, string password)
+        public User Register(string fio, string login, string password,ref string message)
         {
             var user = DataContext.Users
                 .FirstOrDefault(
                     x => x.Login.Equals(login, StringComparison.CurrentCultureIgnoreCase));
             if (user != null)
             {
-                return JsonManager.JsonError($"Пользователь с ником {login} уже зарегистрирован");
+                message = $"Пользователь с ником {login} уже зарегистрирован";
+                return null;
             }
 
             user = new User
@@ -40,7 +41,7 @@ namespace Hakaton_Service
             DataContext.Users.Add(user);
             DataContext.SaveChanges();
 
-            return JsonManager.GetJsonString(user);
+            return user;
         }
 
         public string RegisterByVk(string fio, string token, long userId)
