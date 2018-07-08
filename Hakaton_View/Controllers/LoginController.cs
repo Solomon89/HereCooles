@@ -20,22 +20,30 @@ namespace Hakaton_View.Controllers
         }
 
         // GET: Login
-        public ActionResult Index()
+        public ActionResult Login()
         {
+            ViewData.Model = new User();
             return View();
         }
 
         [HttpPost]
         public ActionResult Login(User user)
         {
-            user = JsonManager.FromJson<User>(_dataManager.UserManager.Authenticate(user.Login, user.Password));
+            user = _dataManager.UserManager.Authenticate(user.Login, user.Password);
+            if (user != null)
+            {
+                SessionAccount.AuthenticateAccount(user);
 
-            SessionAccount.AuthenticateAccount(user);
+                ViewBag.Message =
+                    $"Добро пожаловать, {SessionAccount.GetFio()}!";
 
-            TempData["sAlertMessage"] =
-                $"Добро пожаловать, {SessionAccount.GetFio()}!";
-
-            return Redirect(Request.UrlReferrer?.AbsolutePath ?? HomeIndex);
+                return Redirect(Request.UrlReferrer?.AbsolutePath ?? HomeIndex);
+            }
+            else
+            {
+                ViewBag.Message = "Не верный логин или пароль";
+                return View();
+            }
         }
 
         public RedirectResult LogOut()

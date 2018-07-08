@@ -15,13 +15,14 @@ namespace Hakaton_Service
             return new StreamReader(stream).ReadToEnd();
         }
 
-        public static T FromJson<T>(string obj)
+        public static T FromJson<T>(string obj)where T : new()
         {
             var jsonSerializer = new DataContractJsonSerializer(typeof(T));
             var stream = new MemoryStream();
             new StreamWriter(stream).Write(obj);
             stream.Seek(0, SeekOrigin.Begin);
-            return (T) jsonSerializer.ReadObject(stream);
+            //return (T) jsonSerializer.ReadObject(stream);
+            return new T();
         }
 
         public static string JsonError(string message) => GetJsonString(new ErrorClass {Message = message});

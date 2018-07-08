@@ -67,12 +67,12 @@ namespace Hakaton_Service
         /// <param name="login"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public string Authenticate(string login, string password)
+        public User Authenticate(string login, string password)
         {
             var user = DataContext.Users.FirstOrDefault(x =>
                 x.Login.Equals(login, StringComparison.CurrentCultureIgnoreCase) &&
                 x.Password == password);
-            return JsonManager.GetJsonString(user);
+            return user;
         }
 
         public string AuthenticateVk(long userId)
