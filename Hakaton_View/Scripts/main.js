@@ -250,9 +250,10 @@ function addManueversToMap(route) {
             // Add a marker to the maneuvers group
             if (maneuver.action == "arrive") {
                 var dotIcon;
+                var descr;
                 dataPoints.forEach(function(item) {
-                    if (Math.abs(item.X - maneuver.position.latitude) <= 0.05
-                        && Math.abs(item.Y - maneuver.position.longitude) <= 0.05) {
+                    if (Math.abs(item.X - maneuver.position.latitude) <= 0.0005
+                        && Math.abs(item.Y - maneuver.position.longitude) <= 0.0005) {
                         switch (item.PerformancePoint.Performance.Id) {
                             case 1:
                                 dotIcon = dotIcon1;
@@ -272,6 +273,7 @@ function addManueversToMap(route) {
                             default:
                                 break;
                         }
+                        descr = item.Id;
                     }
                 });
                 var marker = new H.map.Marker({
@@ -279,7 +281,7 @@ function addManueversToMap(route) {
                     lng: maneuver.position.longitude
                 },
                     { icon: dotIcon });
-                marker.instruction = maneuver.instruction;
+                marker.instruction = descr;
                 group.addObject(marker);
             }
             else {
