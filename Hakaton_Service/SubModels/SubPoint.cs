@@ -23,8 +23,10 @@ namespace Hakaton_Service.SubModels
 
         [DataMember]
         public string Description { get; set; }
-
+        
+        [DataMember]
         public PointType PointType { get; set; }
+        [DataMember]
         public PerformancePoint PerformancePoint { get; set; }
 
         [DataMember]

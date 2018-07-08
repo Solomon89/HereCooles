@@ -99,6 +99,10 @@ namespace Hakaton_Service
                 .Include(p => p.Performance)
                 .Where(p => p.User.Id == id)
                 .ToList();
+            if (!userPerformances.Any())
+            {
+                return null;
+            }
             var maxLvl = userPerformances.Max(m => m.Level);
             var performance = userPerformances.FirstOrDefault(p => p.Level == maxLvl);
 
@@ -110,6 +114,10 @@ namespace Hakaton_Service
                     .Include(p => p.Point.EventPoints)
                     .Where(p => p.Performance.Id == performance.Performance.Id)
                     .ToList();
+            if (!performancePoints.Any())
+            {
+                return null;
+            }
 
             var geoMe = new GeoCoordinate(x, y);
             var points = performancePoints
@@ -152,24 +160,19 @@ namespace Hakaton_Service
             {
                 AddPointType("Кафе");
             }
-
-            var arrKafe = new[] {"Solo", "Go! Вафли", "Хлебная лавка", "Rione", "Sushi Time", "Макдоналдс"};
-
-            if (!DataContext.Points.All(x => arrKafe.Contains(x.Name)))
-            {
-                AddPoint("Solo", "Караоке-клуб Solo", 45.048694, 41.982936, DateTime.Now, false, "Кафе",
-                    new[] {"Гурман"});
-                AddPoint("Go! Вафли", "Go! Вафли, Кафе, кофейня, кондитерская", 45.048014, 41.984812, DateTime.Now,
-                    false, "Кафе", new[] {"Гурман"});
-                AddPoint("Хлебная лавка", "Булочная, пекарня", 45.047970, 41.984375, DateTime.Now, false, "Кафе",
-                    new[] {"Гурман"});
-                AddPoint("Rione", "Пиццерия, кафе, доставка еды, бизнес-ланч, кофе с собой", 45.038063, 41.977236,
-                    DateTime.Now, false, "Кафе", new[] {"Гурман"});
-                AddPoint("Sushi Time", "Доставка еды и обедов, пиццерия", 45.022342, 41.964276, DateTime.Now, false,
-                    "Кафе", new[] {"Гурман"});
-                AddPoint("Макдоналдс", "Быстрое питание, sресторан", 45.050131, 41.985521, DateTime.Now, false, "Кафе",
-                    new[] {"Гурман"});
-            }
+            
+            AddPoint("Solo", "Караоке-клуб Solo", 45.048694, 41.982936, DateTime.Now, false, "Кафе",
+                new[] {"Гурман"});
+            AddPoint("Go! Вафли", "Go! Вафли, Кафе, кофейня, кондитерская", 45.048014, 41.984812, DateTime.Now,
+                false, "Кафе", new[] {"Гурман"});
+            AddPoint("Хлебная лавка", "Булочная, пекарня", 45.047970, 41.984375, DateTime.Now, false, "Кафе",
+                new[] {"Гурман"});
+            AddPoint("Rione", "Пиццерия, кафе, доставка еды, бизнес-ланч, кофе с собой", 45.038063, 41.977236,
+                DateTime.Now, false, "Кафе", new[] {"Гурман"});
+            AddPoint("Sushi Time", "Доставка еды и обедов, пиццерия", 45.022342, 41.964276, DateTime.Now, false,
+                "Кафе", new[] {"Гурман"});
+            AddPoint("Макдоналдс", "Быстрое питание, sресторан", 45.050131, 41.985521, DateTime.Now, false, "Кафе",
+                new[] {"Гурман"});
         }
     }
 }

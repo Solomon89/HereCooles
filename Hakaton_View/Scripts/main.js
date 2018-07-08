@@ -251,22 +251,22 @@ function addManueversToMap(route) {
             if (maneuver.action == "arrive") {
                 var dotIcon;
                 dataPoints.forEach(function(item) {
-                    if (item.X == maneuver.position.latitude
-                        && item.Y == maneuver.position.longitude) {
-                        switch (item.PointType.Name) {
-                            case "Интеллигент":
+                    if (Math.abs(item.X - maneuver.position.latitude) <= 0.05
+                        && Math.abs(item.Y - maneuver.position.longitude) <= 0.05) {
+                        switch (item.PerformancePoint.Performance.Id) {
+                            case 1:
                                 dotIcon = dotIcon1;
                                 break;
-                            case "Шопоголик":
+                            case 2:
                                 dotIcon = dotIcon2;
                                 break;
-                            case "Гик":
+                            case 3:
                                 dotIcon = dotIcon3;
                                 break;
-                            case "Гурман":
+                            case 4:
                                 dotIcon = dotIcon4;
                                 break;
-                            case "Алкаш":
+                            case 5:
                                 dotIcon = dotIcon5;
                                 break;
                             default:

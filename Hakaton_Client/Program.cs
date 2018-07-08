@@ -10,6 +10,8 @@ namespace Hakaton_Client
         {
             using (var dataManager = new DataManager())
             {
+                var str = "";
+                dataManager.UserManager.Register("Горшков Сергей Николаевич", "qwe@mail.ru", "123", ref str);
                 dataManager.PointManager.AddPointType("Кафе");
                 var point = dataManager.PointManager.AddPoint("Solo", "desc", 45.048694, 41.982936, DateTime.Now, false,
                     "Кафе", new[] {"Гурман"});
