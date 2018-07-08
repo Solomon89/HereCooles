@@ -59,14 +59,18 @@ namespace Hakaton_Service
 
             DataContext.SaveChanges();
 
-            return JsonManager.GetJsonString(new SubPoint
+            var subPoint = new SubPoint
             {
                 Name = point.Name,
                 Description = point.Description,
                 Id = point.Id,
                 Y = point.Y,
-                X = point.X
-            });
+                X = point.X,
+                PointType = type,
+                PerformancePoint =
+                    DataContext.PerformancePoints.Include(p => p.Point).First(p => p.Point.Id == point.Id)
+            };
+            return JsonManager.GetJsonString(subPoint);
         }
 
         public string AddPointType(string name)
@@ -102,6 +106,7 @@ namespace Hakaton_Service
                 DataContext.PerformancePoints
                     .Include(p => p.Performance)
                     .Include(p => p.Point)
+                    .Include(p => p.Point.PointType)
                     .Include(p => p.Point.EventPoints)
                     .Where(p => p.Performance.Id == performance.Performance.Id)
                     .ToList();
@@ -114,23 +119,29 @@ namespace Hakaton_Service
                     var distanceTo = geoMe.GetDistanceTo(new GeoCoordinate(p.Point.X, p.Point.Y));
                     return distanceTo < radius;
                 })
-                .Select(p => new SubPoint
-                {
-                    Name = p.Point.Name,
-                    Description = p.Point.Description,
-                    Id = p.Point.Id,
-                    Y = p.Point.Y,
-                    X = p.Point.X,
-                    SubEvents = p.Point.EventPoints.Select(e => new SubEvent
+                .Select(p =>
+                    new SubPoint
                     {
-                        Name = e.Name,
-                        DateCreate = e.DateCreate,
-                        TimeLeft = e.TimeLeft,
-                        Id = e.Id,
-                        IsPermanent = e.IsPermanent,
-                        ScoreAward = e.ScoreAward
-                    }).ToList()
-                }).ToList();
+                        Name = p.Point.Name,
+                        Description = p.Point.Description,
+                        Id = p.Point.Id,
+                        Y = p.Point.Y,
+                        X = p.Point.X,
+                        PerformancePoint =
+                            DataContext.PerformancePoints.Include(per => per.Point)
+                                .First(per => per.Point.Id == p.Point.Id),
+                        PointType = p.Point.PointType,
+                        SubEvents = p.Point.EventPoints.Select(e => new SubEvent
+                        {
+                            Name = e.Name,
+                            DateCreate = e.DateCreate,
+                            TimeLeft = e.TimeLeft,
+                            Id = e.Id,
+                            IsPermanent = e.IsPermanent,
+                            ScoreAward = e.ScoreAward
+                        }).ToList()
+                    })
+                .ToList();
 
             return JsonManager.GetJsonString(points);
         }

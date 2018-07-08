@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
 namespace Hakaton_Service
@@ -12,6 +13,10 @@ namespace Hakaton_Service
 
         public static T FromJson<T>(string obj)where T : new()
         {
+            if (string.IsNullOrWhiteSpace(obj))
+            {
+                return default;
+            }
             return JsonConvert.DeserializeObject<T>(obj);
         }
 
