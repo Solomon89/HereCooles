@@ -1,21 +1,30 @@
-﻿using Hakaton_Db.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using Hakaton_Db.Models;
 
 namespace Hakaton_View.Controllers.Manage
 {
     public static class SessionAccount
     {
-        private static List<SessionInfo> Accounts { get; set; } = new List<SessionInfo>();
+        private static List<SessionInfo> Accounts { get; } = new List<SessionInfo>();
 
-        public static long? GetId() => CurrentSession()?.Account.Id;
+        public static long? GetId()
+        {
+            return CurrentSession()?.Account.Id;
+        }
 
-        public static string GetFio() => CurrentSession()?.Account.Fio;
+        public static string GetFio()
+        {
+            return CurrentSession()?.Account.Fio;
+        }
 
-        public static User GetCurretAccount() => CurrentSession()?.Account;
+        public static User GetCurretAccount()
+        {
+            return CurrentSession()?.Account;
+        }
 
         public static long VerifyAccount()
         {
@@ -31,7 +40,7 @@ namespace Hakaton_View.Controllers.Manage
         {
             var curAcc = CurrentSession();
             if (curAcc?.Account?.Login != null || user == null) return;
-            Accounts.Add(new SessionInfo()
+            Accounts.Add(new SessionInfo
             {
                 Account = user,
                 SessionId = Accounts.Count + 1,

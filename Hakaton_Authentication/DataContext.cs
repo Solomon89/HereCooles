@@ -1,12 +1,11 @@
-﻿using Hakaton_Db.Models;
-using System.Data.Common;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using Hakaton_Db.Models;
 
 namespace Hakaton_Db
 {
     /// <inheritdoc />
     /// <summary>
-    /// Класс соединения приложения с БД
+    ///     Класс соединения приложения с БД
     /// </summary>
     public class DataContext : DbContext
     {
@@ -14,24 +13,18 @@ namespace Hakaton_Db
         {
         }
 
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    Database.SetInitializer<DataContext>(null);
-        //    base.OnModelCreating(modelBuilder);
-        //}
-
         /// <summary>
-        /// Таблица Users
+        ///     Таблица Users
         /// </summary>
         public DbSet<User> Users { get; set; }
 
         /// <summary>
-        /// Таблица Performances
+        ///     Таблица Performances
         /// </summary>
         public DbSet<Performance> Performances { get; set; }
 
         /// <summary>
-        /// Характеристики пользователей
+        ///     Характеристики пользователей
         /// </summary>
         public DbSet<UserPerformance> UserPerformances { get; set; }
 

@@ -1,10 +1,9 @@
-﻿using Hakaton_Db;
-using Hakaton_Db.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using User = Hakaton_Db.Models.User;
+using Hakaton_Db;
+using Hakaton_Db.Models;
 
 namespace Hakaton_Service
 {
@@ -15,7 +14,7 @@ namespace Hakaton_Service
         }
 
         /// <summary>
-        /// Метод регистрации
+        ///     Метод регистрации
         /// </summary>
         /// <param name="fio"></param>
         /// <param name="login"></param>
@@ -44,12 +43,12 @@ namespace Hakaton_Service
             return user;
         }
 
-        public string RegisterByVk(string fio, string token, long userId)
+        public User RegisterByVk(string fio, string token, long userId)
         {
             var userDb = DataContext.Users
                 .FirstOrDefault(
                     x => x.Fio == fio && x.UserIdVk == userId);
-            if (userDb != null) return JsonManager.JsonError($"Пользователь {userId} уже зарегистрирован в базе!");
+            if (userDb != null) return null; //Пользователь {userId} уже зарегистрирован в базе!
             userDb = new User
             {
                 Fio = fio,
@@ -59,11 +58,11 @@ namespace Hakaton_Service
             };
             DataContext.Users.Add(userDb);
             DataContext.SaveChanges();
-            return JsonManager.GetJsonString(userDb);
+            return userDb;
         }
 
         /// <summary>
-        /// Метод аутентификации
+        ///     Метод аутентификации
         /// </summary>
         /// <param name="login"></param>
         /// <param name="password"></param>
@@ -76,42 +75,35 @@ namespace Hakaton_Service
             return user;
         }
 
-        public string AuthenticateVk(long userId)
+        public User AuthenticateVk(long userId)
         {
             var user = DataContext.Users
                 .FirstOrDefault(x => x.UserIdVk == userId);
-            return user == null
-                ? JsonManager.JsonError($"Пользователь {userId} не зарегистрирован!")
-                : JsonManager.GetJsonString(user);
+            return user;
         }
 
-        public string Authenticate(long userId)
+        public User Authenticate(long userId)
         {
             var user = DataContext.Users
                 .FirstOrDefault(x => x.Id == userId);
-            return user == null
-                ? JsonManager.JsonError($"Пользователь {userId} не зарегистрирован!")
-                : JsonManager.GetJsonString(user);
+            return user;
         }
 
         /// <summary>
-        /// Удаление пользователя
+        ///     Удаление пользователя
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        public string DeleteUser(string login)
+        public User DeleteUser(string login)
         {
             var user = DataContext.Users.FirstOrDefault(x =>
                 x.Login.Equals(login, StringComparison.CurrentCultureIgnoreCase));
-            if (user == null)
-            {
-                return JsonManager.JsonError($"Пользователь {login} не найден!");
-            }
+            if (user == null) return null; //Пользователь {login} не найден!
 
             DataContext.Users.Remove(user);
             DataContext.SaveChanges();
 
-            return JsonManager.GetJsonString(user);
+            return user;
         }
 
         public void SetPerformancesUser(long userId, Dictionary<string, int> perfList)
@@ -132,30 +124,26 @@ namespace Hakaton_Service
                     .Include(x => x.Performance)
                     .FirstOrDefault(x => x.User.Id == userId && x.Performance.Id == performance.Id);
                 if (usrPerf == null)
-                {
-                    DataContext.UserPerformances.Add(userPerformance);   
-                }
+                    DataContext.UserPerformances.Add(userPerformance);
                 else
-                {
                     usrPerf.Level = item.Value;
-                }
             }
 
             DataContext.SaveChanges();
         }
 
         /// <summary>
-        /// Инциализация свойств человека
+        ///     Инциализация свойств человека
         /// </summary>
         private void CheckPerfomance()
         {
             if (!DataContext.Performances.Any())
             {
-                DataContext.Performances.Add(new Performance() {Name = "Интеллигент"});
-                DataContext.Performances.Add(new Performance() {Name = "Шопоголик"});
-                DataContext.Performances.Add(new Performance() {Name = "Гик"});
-                DataContext.Performances.Add(new Performance() {Name = "Гурман"});
-                DataContext.Performances.Add(new Performance() {Name = "Алкаш"});
+                DataContext.Performances.Add(new Performance {Name = "Интеллигент"});
+                DataContext.Performances.Add(new Performance {Name = "Шопоголик"});
+                DataContext.Performances.Add(new Performance {Name = "Гик"});
+                DataContext.Performances.Add(new Performance {Name = "Гурман"});
+                DataContext.Performances.Add(new Performance {Name = "Алкаш"});
                 DataContext.SaveChanges();
             }
         }

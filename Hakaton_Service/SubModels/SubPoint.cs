@@ -1,7 +1,7 @@
-﻿using Hakaton_Db.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Hakaton_Db.Models;
 
 namespace Hakaton_Service.SubModels
 {
@@ -23,9 +23,10 @@ namespace Hakaton_Service.SubModels
 
         [DataMember]
         public string Description { get; set; }
-        
+
         [DataMember]
         public PointType PointType { get; set; }
+
         [DataMember]
         public PerformancePoint PerformancePoint { get; set; }
 

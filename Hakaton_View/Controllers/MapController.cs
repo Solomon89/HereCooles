@@ -1,18 +1,18 @@
-﻿using Hakaton_Db.Models;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using Hakaton_Db.Models;
 using Hakaton_Service;
 using Hakaton_Service.SubModels;
 using Hakaton_View.Controllers.Manage;
-using System.Collections.Generic;
-using System.Web.Mvc;
 
 namespace Hakaton_View.Controllers
 {
     public class MapController : Controller
     {
-        private readonly DataManager _dataManager;
         private const string HomeIndex = "/Map/Index";
         private const string LoginPage = "/Login/Login";
         private const string DistributionPage = "/Login/Distribution";
+        private readonly DataManager _dataManager;
 
         public MapController()
         {
@@ -26,51 +26,37 @@ namespace Hakaton_View.Controllers
             ViewBag.Map = true;
             if (SessionAccount.GetId() == null) return Redirect(LoginPage);
             var user = SessionAccount.GetCurretAccount();
-            if (x == 0 && y == 0 || user?.Id != 0)
-            {
-                return View();
-            }
-            else
-            {
-                var points = _dataManager.PointManager.GetNearestPoints(x, y, user.Id);
-                return View(points);
-            }
+            if (x == 0 && y == 0 || user?.Id != 0) return View();
+
+            var points = _dataManager.PointManager.GetNearestPoints(x, y, user.Id);
+            return View(points);
         }
 
         [HttpPost]
-        public string GetWay(string x, string y)
+        public List<SubPoint> GetWay(string x, string y)
         {
             if (SessionAccount.GetId() == null) return null;
             var user = SessionAccount.GetCurretAccount();
             if (string.IsNullOrWhiteSpace(x) || string.IsNullOrWhiteSpace(y) || user == null || user.Id == 0)
-            {
                 return null;
-            }
-            else
-            {
-                var points = _dataManager.PointManager.GetNearestPoints(double.Parse(x), double.Parse(y), user.Id);
 
-                return points;
-            }
+            var points = _dataManager.PointManager.GetNearestPoints(double.Parse(x), double.Parse(y), user.Id);
+
+            return points;
         }
 
         public ActionResult GetEventsPoint(long idPoint)
         {
             if (SessionAccount.GetId() == null) return null;
             var user = SessionAccount.GetCurretAccount();
-            if (user == null || user.Id == 0)
-            {
-                return null;
-            }
-            else
-            {
-                var events = _dataManager.PointManager.GetPoint((int)idPoint);
-                ViewData.Model = events;
+            if (user == null || user.Id == 0) return null;
 
-                return View();
-            }
+            var events = _dataManager.PointManager.GetPoint((int) idPoint);
+            ViewData.Model = events;
+
+            return View();
         }
-        
+
         // POST: Map
         [HttpPost]
         public ActionResult Index(List<Point> points)
@@ -79,10 +65,11 @@ namespace Hakaton_View.Controllers
 
             return View(points);
         }
+
         [HttpPost]
         public ActionResult TaskOnMap(string idStr)
         {
-            int id = int.Parse(idStr);
+            var id = int.Parse(idStr);
             var points = _dataManager.PointManager.GetPoint(id);
             ViewData.Model = points;
             return PartialView();
