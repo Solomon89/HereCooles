@@ -1,6 +1,5 @@
-﻿using System;
+﻿using System.Runtime.Serialization;
 using Newtonsoft.Json;
-using System.Runtime.Serialization;
 
 namespace Hakaton_Service
 {
@@ -11,16 +10,16 @@ namespace Hakaton_Service
             return JsonConvert.SerializeObject(obj);
         }
 
-        public static T FromJson<T>(string obj)where T : new()
+        public static T FromJson<T>(string obj) where T : new()
         {
-            if (string.IsNullOrWhiteSpace(obj))
-            {
-                return default;
-            }
+            if (string.IsNullOrWhiteSpace(obj)) return default;
             return JsonConvert.DeserializeObject<T>(obj);
         }
 
-        public static string JsonError(string message) => GetJsonString(new ErrorClass {Message = message});
+        public static string JsonError(string message)
+        {
+            return GetJsonString(new ErrorClass {Message = message});
+        }
 
         [DataContract]
         private class ErrorClass

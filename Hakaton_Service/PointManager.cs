@@ -1,11 +1,11 @@
-﻿using Hakaton_Db;
-using Hakaton_Db.Models;
-using Hakaton_Service.SubModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Device.Location;
 using System.Linq;
+using Hakaton_Db;
+using Hakaton_Db.Models;
+using Hakaton_Service.SubModels;
 
 namespace Hakaton_Service
 {
@@ -15,25 +15,23 @@ namespace Hakaton_Service
         {
         }
 
-        public string AddPoint(string name, string description, double x, double y, DateTime dateCreate, bool isSpecial,
+        public SubPoint AddPoint(string name, string description, double x, double y, DateTime dateCreate,
+            bool isSpecial,
             string pointType, string[] performances)
         {
             var point = DataContext.Points
                 .FirstOrDefault(
                     p => p.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
-            if (point != null) return JsonManager.JsonError($"Точка {name} уже существует!");
+            if (point != null) return null; //Точка {name} уже существует!
 
             var type = DataContext.PointTypes
                 .FirstOrDefault(
                     p => p.Name.Equals(pointType, StringComparison.CurrentCultureIgnoreCase));
-            if (type == null) return JsonManager.JsonError($"Не найден тип {pointType} !");
+            if (type == null) return null; //Не найден тип {pointType} !
 
             var listPerf = DataContext.Performances.Where(p => performances.Contains(p.Name)).ToList();
 
-            if (listPerf.Count != performances.Length)
-            {
-                return JsonManager.JsonError("Не найдены характеристики для точки");
-            }
+            if (listPerf.Count != performances.Length) return null; //Не найдены характеристики для точки
 
             point = new Point
             {
@@ -69,46 +67,44 @@ namespace Hakaton_Service
                 X = point.X,
                 PointType = type,
                 PerformancePoint =
-                DataContext.PerformancePoints.Include(p => p.Point).First(p => p.Point.Id == point.Id)
+                    DataContext.PerformancePoints.Include(p => p.Point).First(p => p.Point.Id == point.Id)
             };
-            return JsonManager.GetJsonString(subPoint);
+            return subPoint;
         }
 
         public Point GetPoint(int id)
         {
-            return DataContext.Points.Include(i=>i.EventPoints).Include(i=>i.PointType).FirstOrDefault(i => i.Id == id);
+            return DataContext.Points.Include(i => i.EventPoints).Include(i => i.PointType)
+                .FirstOrDefault(i => i.Id == id);
         }
 
-        public string AddPointType(string name)
+        public PointType AddPointType(string name)
         {
             var pointType = DataContext.PointTypes
                 .FirstOrDefault(
                     x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
-            if (pointType != null) return JsonManager.JsonError($"Тип {name} уже существует!");
+            if (pointType != null) return null; //Тип {name} уже существует!
             pointType = new PointType
             {
                 Name = name
             };
             DataContext.PointTypes.Add(pointType);
             DataContext.SaveChanges();
-            return JsonManager.GetJsonString(pointType);
+            return pointType;
         }
 
-        public string GetNearestPoints(double x, double y, long id, double radius = 1000)
+        public List<SubPoint> GetNearestPoints(double x, double y, long id, double radius = 1000)
         {
             CheckPoints();
             var user = DataContext.Users.FirstOrDefault(u => u.Id == id);
-            if (user == null) return JsonManager.JsonError($"Пользователь {id} не найден!");
+            if (user == null) return null; //Пользователь {id} не найден!
 
             var userPerformances = DataContext.UserPerformances
                 .Include(p => p.User)
                 .Include(p => p.Performance)
                 .Where(p => p.User.Id == id && p.Level > 0)
                 .ToList();
-            if (!userPerformances.Any())
-            {
-                return null;
-            }
+            if (!userPerformances.Any()) return null;
 
             var performancePoints =
                 DataContext.PerformancePoints
@@ -119,10 +115,7 @@ namespace Hakaton_Service
                     .ToList()
                     .Where(p => userPerformances.Exists(u => u.Performance.Id == p.Performance.Id))
                     .ToList();
-            if (!performancePoints.Any())
-            {
-                return null;
-            }
+            if (!performancePoints.Any()) return null;
 
             var geoMe = new GeoCoordinate(x, y);
             var points = performancePoints
@@ -163,7 +156,7 @@ namespace Hakaton_Service
                 Y = y
             });
             var sortWayPoints = SortWayPoints(points, x, y);
-            return JsonManager.GetJsonString(sortWayPoints);
+            return sortWayPoints;
         }
 
         private List<SubPoint> SortWayPoints(List<SubPoint> points, double x, double y)
@@ -222,9 +215,9 @@ namespace Hakaton_Service
                 45.044981, 41.975774, DateTime.Now, false, "Кафе",
                 new[] {"Гурман"});
 
-            //AddPoint("Кино Max", "Кинотеатр",
-            //    45.050106, 41.985191, DateTime.Now, false, "Кинотеатр",
-            //    new[] {"Интеллигент"});
+            AddPoint("Кино Max", "Кинотеатр",
+                45.050106, 41.985191, DateTime.Now, false, "Кинотеатр",
+                new[] {"Интеллигент"});
             AddPoint("Моя Страна. Моя История", "Музей",
                 45.048483, 41.982150, DateTime.Now, false, "Музей",
                 new[] {"Интеллигент"});

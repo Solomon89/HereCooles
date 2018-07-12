@@ -1,8 +1,9 @@
-﻿using Hakaton_Db;
-using Hakaton_Db.Models;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Hakaton_Db;
+using Hakaton_Db.Models;
 
 namespace Hakaton_Service
 {
@@ -12,13 +13,13 @@ namespace Hakaton_Service
         {
         }
 
-        public string AddEventPoint(string name, string description, DateTime createDate, decimal scoreAward,
+        public EventPoint AddEventPoint(string name, string description, DateTime createDate, decimal scoreAward,
             string pointName, string eventPointType, bool isPermanent, DateTime? timeLeft = null)
         {
             var point = DataContext.Points
                 .FirstOrDefault(
                     x => x.Name.Equals(pointName, StringComparison.CurrentCultureIgnoreCase));
-            if (point == null) return JsonManager.JsonError($"Точка {pointName} не создана!");
+            if (point == null) return null; //Точка {pointName} не создана!
             var pointType = DataContext.EventPointTypes
                 .FirstOrDefault(
                     x => x.Name.Equals(eventPointType, StringComparison.CurrentCultureIgnoreCase));
@@ -36,31 +37,29 @@ namespace Hakaton_Service
             if (DataContext.EventPoints.ToList()
                 .Exists(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase) &&
                              x.Description.Equals(description, StringComparison.CurrentCultureIgnoreCase)))
-            {
-                return JsonManager.JsonError($"Событие {name} уже существует!");
-            }
+                return null; //Событие {name} уже существует!
 
             DataContext.EventPoints.Add(eventPoint);
             DataContext.SaveChanges();
-            return JsonManager.GetJsonString(eventPoint);
+            return eventPoint;
         }
 
-        public string AddEventPointType(string name)
+        public EventPointType AddEventPointType(string name)
         {
             var pointType = DataContext.EventPointTypes
                 .FirstOrDefault(
                     x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
-            if (pointType != null) return JsonManager.JsonError($"Тип события {name} уже существует!");
+            if (pointType != null) return null; //Тип события {name} уже существует!
             pointType = new EventPointType
             {
                 Name = name
             };
             DataContext.EventPointTypes.Add(pointType);
             DataContext.SaveChanges();
-            return JsonManager.GetJsonString(pointType);
+            return pointType;
         }
 
-        public string GetEventsForPoint(string pointName)
+        public List<EventPoint> GetEventsForPoint(string pointName)
         {
             CheckEventPoints();
             var eventPoints = DataContext.EventPoints
@@ -68,10 +67,10 @@ namespace Hakaton_Service
                 .Include(x => x.EventPointType)
                 .Where(x => x.Point.Name.Equals(pointName, StringComparison.CurrentCultureIgnoreCase))
                 .ToList();
-            return JsonManager.GetJsonString(eventPoints);
+            return eventPoints;
         }
 
-        public string GetEventsForPoint(long pointId)
+        public List<EventPoint> GetEventsForPoint(long pointId)
         {
             CheckEventPoints();
             var eventPoints = DataContext.EventPoints
@@ -79,7 +78,7 @@ namespace Hakaton_Service
                 .Include(x => x.EventPointType)
                 .Where(x => x.Point.Id == pointId)
                 .ToList();
-            return JsonManager.GetJsonString(eventPoints);
+            return eventPoints;
         }
 
         private void CheckEventPoints()

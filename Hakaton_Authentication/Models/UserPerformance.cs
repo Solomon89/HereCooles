@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace Hakaton_Db.Models
 {
     /// <summary>
-    /// Характеристики людей
+    ///     Характеристики людей
     /// </summary>
     [Serializable]
     [DataContract(IsReference = false)]
@@ -22,7 +22,7 @@ namespace Hakaton_Db.Models
         public Performance Performance { get; set; }
 
         /// <summary>
-        /// Уровень характеристики
+        ///     Уровень характеристики
         /// </summary>
         [DataMember]
         public int Level { get; set; }

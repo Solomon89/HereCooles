@@ -1,5 +1,5 @@
-﻿using Hakaton_Service;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Hakaton_Service;
 
 namespace Hakaton_View.Controllers
 {
@@ -14,7 +14,7 @@ namespace Hakaton_View.Controllers
 
         // GET: Menu
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Menu()
         {
             return View();
         }

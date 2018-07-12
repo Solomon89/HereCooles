@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace Hakaton_Db.Models
 {
     /// <summary>
-    /// Модель таблицы Users
+    ///     Модель таблицы Users
     /// </summary>
     [Serializable]
     [DataContract(IsReference = false)]

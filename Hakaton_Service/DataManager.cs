@@ -1,18 +1,18 @@
-﻿using Hakaton_Db;
-using System;
+﻿using System;
+using Hakaton_Db;
 
 namespace Hakaton_Service
 {
     /// <summary>
-    /// Класс доступа к БД
+    ///     Класс доступа к БД
     /// </summary>
     public class DataManager : IDisposable
     {
         private readonly DataContext _dataContext;
-        private PerformanceManager _performanceManager;
-        private UserManager _userManager;
-        private PointManager _pointManager;
         private EventManager _eventManager;
+        private PerformanceManager _performanceManager;
+        private PointManager _pointManager;
+        private UserManager _userManager;
 
         public DataManager()
         {

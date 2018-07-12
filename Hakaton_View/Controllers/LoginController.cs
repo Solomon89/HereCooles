@@ -1,24 +1,23 @@
-﻿using Hakaton_Db.Models;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using Hakaton_Db.Models;
 using Hakaton_Service;
 using Hakaton_View.Controllers.Manage;
-using System.Collections.Generic;
-using System.Web.Mvc;
 
 namespace Hakaton_View.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly DataManager _dataManager;
         private const string HomeIndex = "/Map/Index";
         private const string LoginPage = "/Login/Login";
         private const string DistributionPage = "/Login/Distribution";
+        private readonly DataManager _dataManager;
 
         public LoginController()
         {
             _dataManager = new DataManager();
             var verifyAccount = SessionAccount.VerifyAccount();
-            var userStr = _dataManager.UserManager.Authenticate(verifyAccount);
-            var user = JsonManager.FromJson<User>(userStr);
+            var user = _dataManager.UserManager.Authenticate(verifyAccount);
             SessionAccount.AuthenticateAccount(user);
         }
 
@@ -32,7 +31,7 @@ namespace Hakaton_View.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            if (SessionAccount.GetId() == null) return Redirect(HomeIndex);
+            //if (SessionAccount.GetId() == null) return Redirect(HomeIndex);
             user = _dataManager.UserManager.Authenticate(user.Login, user.Password);
             if (user != null)
             {
@@ -43,11 +42,9 @@ namespace Hakaton_View.Controllers
 
                 return Redirect(DistributionPage);
             }
-            else
-            {
-                ViewBag.Message = "Не верный логин или пароль";
-                return View();
-            }
+
+            ViewBag.Message = "Не верный логин или пароль";
+            return View();
         }
 
         public RedirectResult LogOut()
@@ -67,7 +64,7 @@ namespace Hakaton_View.Controllers
         public ActionResult Registration(User user)
         {
             //if (SessionAccount.GetId() != null) return Redirect(HomeIndex);
-            string message = "";
+            var message = "";
             user = _dataManager.UserManager.Register(user.Fio, user.Login, user.Password, ref message);
             if (user == null)
             {
@@ -86,10 +83,7 @@ namespace Hakaton_View.Controllers
             if (SessionAccount.GetId() == null) return Redirect(LoginPage);
             var user = SessionAccount.GetCurretAccount();
 
-            if (user == null)
-            {
-                user = new User();
-            }
+            if (user == null) user = new User();
 
             return View(user);
         }
@@ -105,7 +99,7 @@ namespace Hakaton_View.Controllers
             }
             else
             {
-                Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                var dictionary = new Dictionary<string, int>();
                 dictionary.Add("Интеллигент", range1);
                 dictionary.Add("Шопоголик", range2);
                 dictionary.Add("Гик", range3);
@@ -116,6 +110,7 @@ namespace Hakaton_View.Controllers
 
             return Redirect(HomeIndex);
         }
+
         public ActionResult ProfileInfo()
         {
             ViewBag.Map = true;
